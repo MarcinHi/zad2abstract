@@ -11,18 +11,7 @@ import java.util.List;
 
 public class Main {
 
-	static {
-		try(Connection connection = DriverManager.getConnection("jdbc:h2:~/test");
-		Statement statement = connection.createStatement();) {
-			String sql = IOUtils.toString(Main.class.getResourceAsStream("dump.sql"));
-			boolean execute = statement.execute(sql);
-			System.out.println(sql);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+
 
 	public static void main(String[] args) {
 
@@ -33,9 +22,8 @@ public class Main {
 		groupDao.save(g);
 
 		//get all groups
-		List<Model> groups = groupDao.loadAll();
-		for (Model model : groups) {
-			Group group = (Group) model;
+		List<Group> groups = groupDao.loadAll();
+		for (Group group : groups) {
 			System.out.println(group);
 		}
 		//update group
@@ -43,11 +31,23 @@ public class Main {
 		groupDao.save(g);
 		
 		//remove group
-		Group firstElement = (Group) groupDao.loadById(1);
+		Group firstElement = groupDao.loadById(1);
 		System.out.println(firstElement);
 		if (firstElement != null) {
 			groupDao.delete(firstElement);
 		}
 	}
 
+    static {
+        try(Connection connection = DriverManager.getConnection("jdbc:h2:file:./data/sample");
+            Statement statement = connection.createStatement();) {
+            String sql = IOUtils.toString(Main.class.getResourceAsStream("dump.sql"));
+            boolean execute = statement.execute(sql);
+            System.out.println(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

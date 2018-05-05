@@ -2,14 +2,14 @@ package zad2;
 
 import java.util.List;
 
-public interface DaoInterface {
+public interface DaoInterface<T extends Model> {
 
-	public List<Model> loadAll();
+	public List<T> loadAll();
 
-	public Model loadById(int id);
+	public T loadById(int id);
 
-	public void save(Model object);
+	public void save(T object);
 
-	public void delete(Model object);
+	public void delete(T object);
 
 }

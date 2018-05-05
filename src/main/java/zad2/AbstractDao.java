@@ -7,22 +7,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractDao implements DaoInterface {
+public abstract class AbstractDao<T extends Model> implements DaoInterface<T> {
 
-	protected abstract Model newFromResultSet(ResultSet rs) throws SQLException;
+	protected abstract T newFromResultSet(ResultSet rs) throws SQLException;
 
 	protected abstract String getLoadAllQuery();
 
 	protected abstract String getLoadByIdQuery();
 
-	protected abstract PreparedStatement saveNewStatement(Connection con, Model item) throws SQLException;
+	protected abstract PreparedStatement saveNewStatement(Connection con, T item) throws SQLException;
 
-	protected abstract PreparedStatement updateExistingStatement(Connection con, Model item) throws SQLException;
+	protected abstract PreparedStatement updateExistingStatement(Connection con, T item) throws SQLException;
 
-	protected abstract PreparedStatement deleteStatement(Connection con, Model item) throws SQLException;
+	protected abstract PreparedStatement deleteStatement(Connection con, T item) throws SQLException;
 
-	public List<Model> loadAll() {
-		List<Model> list = new ArrayList<>();
+	@Override
+	public List<T> loadAll() {
+		List<T> list = new ArrayList<>();
 		try (Connection con = DbUtil.getConnection()) {
 			try (ResultSet rs = con.prepareStatement(getLoadAllQuery()).executeQuery()) {
 				while (rs.next()) {
@@ -35,7 +36,8 @@ public abstract class AbstractDao implements DaoInterface {
 		return list;
 	}
 
-	public Model loadById(int id) {
+	@Override
+	public T loadById(int id) {
 		try (Connection con = DbUtil.getConnection()) {
 			try (PreparedStatement ps = con.prepareStatement(getLoadByIdQuery())) {
 				ps.setInt(1, id);
@@ -51,8 +53,8 @@ public abstract class AbstractDao implements DaoInterface {
 		}
 		return null;
 	}
-
-	public void save(Model item) {
+	@Override
+	public void save(T item) {
 		try (Connection con = DbUtil.getConnection()) {
 			if (item.getId() == null) {
 				saveNewToDb(con, item);
@@ -64,7 +66,22 @@ public abstract class AbstractDao implements DaoInterface {
 		}
 	}
 
-	private void saveNewToDb(Connection con, Model item) throws SQLException {
+
+	@Override
+	public void delete(T item) {
+		try (Connection con = DbUtil.getConnection()) {
+			if (item.getId() != 0) {
+				try (PreparedStatement ps = deleteStatement(con, item)) {
+					ps.executeUpdate();
+				}
+				item.setId(0);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void saveNewToDb(Connection con, T item) throws SQLException {
 		try (PreparedStatement ps = saveNewStatement(con, item)) {
 			ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
@@ -75,22 +92,9 @@ public abstract class AbstractDao implements DaoInterface {
 		}
 	}
 
-	private void updateExistingInDb(Connection con, Model item) throws SQLException {
+	private void updateExistingInDb(Connection con, T item) throws SQLException {
 		try (PreparedStatement ps = updateExistingStatement(con, item)) {
 			ps.executeUpdate();
-		}
-	}
-
-	public void delete(Model item) {
-		try (Connection con = DbUtil.getConnection()) {
-			if (item.getId() != 0) {
-				try (PreparedStatement ps = deleteStatement(con, item)) {
-					ps.executeUpdate();
-				}
-				item.setId(0);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 	}
 

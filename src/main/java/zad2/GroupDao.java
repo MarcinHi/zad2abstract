@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class GroupDao extends AbstractDao {
+public class GroupDao extends AbstractDao<Group> {
 
 	private static final String LOAD_ALL_QUERY = "SELECT * FROM user_group;";
 	private static final String LOAD_BY_ID_QUERY = "SELECT * FROM user_group WHERE id=?;";
@@ -14,24 +14,24 @@ public class GroupDao extends AbstractDao {
 	private static final String DELETE_QUERY = "DELETE FROM user_group WHERE id=?;";
 
 	@Override
-	protected PreparedStatement saveNewStatement(Connection con, Model group) throws SQLException {
+	protected PreparedStatement saveNewStatement(Connection con, Group group) throws SQLException {
 		String[] genereatedColumns = { "id" };
 		PreparedStatement ps = con.prepareStatement(CREATE_QUERY, genereatedColumns);
-		ps.setString(1, ((Group) group).getName());
+		ps.setString(1,  group.getName());
 		return ps;
 
 	}
 
 	@Override
-	protected PreparedStatement updateExistingStatement(Connection con, Model group) throws SQLException {
+	protected PreparedStatement updateExistingStatement(Connection con, Group group) throws SQLException {
 		PreparedStatement ps = con.prepareStatement(UPDATE_QUERY);
-		ps.setString(1, ((Group) group).getName());
+		ps.setString(1,  group.getName());
 		ps.setLong(2, group.getId());
 		return ps;
 	}
 
 	@Override
-	protected PreparedStatement deleteStatement(Connection con, Model group) throws SQLException {
+	protected PreparedStatement deleteStatement(Connection con, Group group) throws SQLException {
 		PreparedStatement ps = con.prepareStatement(DELETE_QUERY);
 		ps.setLong(1, group.getId());
 		return ps;
@@ -39,7 +39,7 @@ public class GroupDao extends AbstractDao {
 	}
 
 	@Override
-	protected Model newFromResultSet(ResultSet rs) throws SQLException {
+	protected Group newFromResultSet(ResultSet rs) throws SQLException {
 		return new Group(rs.getLong("id"), rs.getString("name"));
 	}
 
