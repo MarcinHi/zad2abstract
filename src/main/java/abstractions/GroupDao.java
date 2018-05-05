@@ -9,8 +9,8 @@ public class GroupDao extends AbstractDao<Group> {
 
 	private static final String LOAD_ALL_QUERY = "SELECT * FROM user_group;";
 	private static final String LOAD_BY_ID_QUERY = "SELECT * FROM user_group WHERE id=?;";
-	private static final String CREATE_QUERY = "INSERT INTO user_group(name) VALUES(?);";
-	private static final String UPDATE_QUERY = "UPDATE user_group SET name=? WHERE id=?;";
+	private static final String CREATE_QUERY = "INSERT INTO user_group(port) VALUES(?);";
+	private static final String UPDATE_QUERY = "UPDATE user_group SET port=? WHERE id=?;";
 	private static final String DELETE_QUERY = "DELETE FROM user_group WHERE id=?;";
 
 	@Override
@@ -40,7 +40,7 @@ public class GroupDao extends AbstractDao<Group> {
 
 	@Override
 	protected Group newFromResultSet(ResultSet rs) throws SQLException {
-		return new Group(rs.getLong("id"), rs.getString("name"));
+		return new Group(rs.getLong("id"), rs.getString("port"));
 	}
 
 	@Override

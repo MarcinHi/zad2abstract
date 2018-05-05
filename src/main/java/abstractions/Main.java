@@ -17,7 +17,7 @@ public class Main {
 
 		// create group
 		GroupDao groupDao = new GroupDao();
-		Group g = new Group("sample name");
+		Group g = new Group("sample port");
 		//save group to database
 		groupDao.save(g);
 
@@ -27,7 +27,7 @@ public class Main {
 			System.out.println(group);
 		}
 		//update group
-		g.setName("other name");
+		g.setName("other port");
 		groupDao.save(g);
 		
 		//remove group

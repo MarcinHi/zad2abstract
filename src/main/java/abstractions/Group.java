@@ -2,21 +2,12 @@ package abstractions;
 
 public class Group implements Model {
 
-	private static String value = "hello";
 
-	static {
-		value = "new";
-	}
-
-	private Long id = 123L;
+	private Long id;
 	private String name;
-	{
-		System.out.println(id); //123
-	}
 
 	public Group(String name) {
 		this(null, name);
-		System.out.println("in const");
 	}
 
 	public Group(Long id, String name) {
