@@ -19,8 +19,8 @@ public class ExerciseDao extends AbstractDao<Exercise> {
 
     @Override
     protected PreparedStatement saveNewStatement(Connection con, Exercise exercise) throws SQLException {
-        String[] genereatedColumns = { "id" };
-        PreparedStatement ps = con.prepareStatement(CREATE_QUERY, genereatedColumns);
+        String[] generatedColumns = { "id" };
+        PreparedStatement ps = con.prepareStatement(CREATE_QUERY, generatedColumns);
         ps.setString(1,  exercise.getTitle());
         ps.setString(2,  exercise.getDescription());
         return ps;
