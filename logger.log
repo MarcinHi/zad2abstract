@@ -1,0 +1,5 @@
+PostEvent{post=Post{id=1, message='New post on my blog1'}, action='add'}
+PostEvent{post=Post{id=2, message='New post on my blog2'}, action='add'}
+PostEvent{post=Post{id=3, message='New post on my blog3'}, action='add'}
+PostEvent{post=Post{id=1, message='New post on my blog1'}, action='delete'}
+PostEvent{post=Post{id=3, message='New post on my blog3'}, action='delete'}

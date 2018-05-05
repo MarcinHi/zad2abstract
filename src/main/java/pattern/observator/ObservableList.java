@@ -21,9 +21,9 @@ public class ObservableList extends ArrayList implements Observable {
         return super.add(o);
     }
 
-    private void dispatchEvent(Object o){
+    private void dispatchEvent(Object event){
         for (Observator observable : observables) {
-            observable.update(o);
+            observable.update(event);
         }
     }
 }

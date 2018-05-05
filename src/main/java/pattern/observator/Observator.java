@@ -1,5 +1,5 @@
 package pattern.observator;
 
 public interface Observator {
-    void update(Object o);
+    void update(Object event);
 }
