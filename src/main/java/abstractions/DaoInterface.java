@@ -1,4 +1,4 @@
-package zad2;
+package abstractions;
 
 import java.util.List;
 

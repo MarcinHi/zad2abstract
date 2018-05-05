@@ -1,7 +1,7 @@
-package zad2.exercise;
+package abstractions.exercise;
 
 
-import zad2.Model;
+import abstractions.Model;
 
 public class Exercise implements Model {
 

@@ -1,7 +1,7 @@
-package zad2.exercise;
+package abstractions.exercise;
 
 import org.apache.commons.io.IOUtils;
-import zad2.Main;
+import abstractions.Main;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -13,7 +13,7 @@ public class Application {
     static {
         try(Connection connection = DriverManager.getConnection("jdbc:h2:file:./data/sample");
             Statement statement = connection.createStatement();) {
-            String sql = IOUtils.toString(Main.class.getResourceAsStream("dump.sql"));
+            String sql = IOUtils.toString(Main.class.getResourceAsStream("/dump.sql"));
             System.out.println(sql);
         } catch (SQLException e) {
             e.printStackTrace();

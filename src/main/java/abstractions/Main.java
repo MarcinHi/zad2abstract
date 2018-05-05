@@ -1,4 +1,4 @@
-package zad2;
+package abstractions;
 
 import org.apache.commons.io.IOUtils;
 
@@ -41,7 +41,7 @@ public class Main {
     static {
         try(Connection connection = DriverManager.getConnection("jdbc:h2:file:./data/sample");
             Statement statement = connection.createStatement();) {
-            String sql = IOUtils.toString(Main.class.getResourceAsStream("dump.sql"));
+            String sql = IOUtils.toString(Main.class.getResourceAsStream("/dump.sql"));
             boolean execute = statement.execute(sql);
             System.out.println(sql);
         } catch (SQLException e) {

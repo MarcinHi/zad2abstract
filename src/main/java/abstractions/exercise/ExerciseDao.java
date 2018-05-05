@@ -1,8 +1,7 @@
-package zad2.exercise;
+package abstractions.exercise;
 
 
-import zad2.AbstractDao;
-import zad2.Model;
+import abstractions.AbstractDao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

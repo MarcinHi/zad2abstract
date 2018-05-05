@@ -1,4 +1,4 @@
-package zad2;
+package abstractions;
 
 public interface Model {
 	public Long getId();
